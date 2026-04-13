@@ -25,43 +25,34 @@ export default class Pokemon extends Selectors {
   renderPokemon = () => {
     this.elLvl.innerText = `Lv. ${this.lvl}`
     this.elImg.src = this.img
-    this.elName.innerText = `${this.name}`
+    this.elName.innerText = this.name
 
     this.renderHp()
   }
 
   changeHp = (count, cb) => {
-    this.hp.newHp -= count
+    const nextHp = Math.max(this.hp.newHp - count, 0)
+    const damageDone = this.hp.newHp - nextHp
 
-    if (this.hp.newHp <= 0) {
-      this.hp.newHp = 0
-      alert(this.name + "LOSE")
-    }
+    this.hp.newHp = nextHp
+    this.renderHp()
 
-    this.renderHp(count)
+    cb && cb(damageDone)
 
-    cb && cb(count)
+    return this.hp.newHp === 0
   }
 
-  renderHp = (count) => {
+  renderHp = () => {
     this.renderHpLife()
-    this.renderBarHp(count)
+    this.renderBarHp()
   }
 
   renderHpLife = () => {
     this.elHealth.innerText = `${this.hp.newHp} / ${this.hp.defaultHp}`
   }
 
-  renderBarHp = (count) => {
-    console.log(this.hp.newHp)
-
-    this.elBarHp.style.width = `${this.hp.newHp}%`
-
-    let hp =
-      this.hp.newHp === this.hp.defaultHp
-        ? 100
-        : `${Math.round((100 * count) / this.hp.defaultHp)}`
-
-    this.hp.newHp -= hp
+  renderBarHp = () => {
+    const hpPercent = Math.round((this.hp.newHp / this.hp.defaultHp) * 100)
+    this.elBarHp.style.width = `${hpPercent}%`
   }
 }

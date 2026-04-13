@@ -3,7 +3,7 @@ export const POKEMONS = [
     name: "Pikachu",
     type: "electric",
     hp: 274,
-    img: "http://sify4321.000webhostapp.com/pikachu.png",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
     lvl: 1,
     attacks: [
       {
@@ -37,7 +37,7 @@ export const POKEMONS = [
     ],
   },
   {
-    img: "http://sify4321.000webhostapp.com/charmander.png",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
     name: "Charmander",
     type: "fire",
     hp: 282,
@@ -74,9 +74,9 @@ export const POKEMONS = [
     ],
   },
   {
-    img: "http://sify4321.000webhostapp.com/bulbasaur.png",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
     name: "Bulbasaur",
-    type: "fire",
+    type: "grass",
     hp: 294,
     lvl: 1,
     attacks: [
@@ -111,7 +111,7 @@ export const POKEMONS = [
     ],
   },
   {
-    img: "http://sify4321.000webhostapp.com/squirtle.png",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
     name: "Squirtle",
     type: "water",
     hp: 292,
@@ -148,7 +148,7 @@ export const POKEMONS = [
     ],
   },
   {
-    img: "http://sify4321.000webhostapp.com/pidgey.png",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
     name: "Pidgey",
     type: "air",
     hp: 284,
@@ -185,7 +185,7 @@ export const POKEMONS = [
     ],
   },
   {
-    img: "http://sify4321.000webhostapp.com/mew.png",
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
     name: "Mew",
     type: "air",
     hp: 404,
