@@ -18,7 +18,7 @@ function generateLog(
     `${nameChar} пытался что-то сказать, но вдруг, неожиданно ${nameEnemy} со скуки, разбил бровь сопернику. -${count} ${newHp}/${defaultHp}`,
   ]
 
-  return logs[random(logs.length) - 1]
+  return logs[random(logs.length - 1)]
 }
 
 export default generateLog
