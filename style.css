@@ -583,3 +583,103 @@ h1 {
   width: 50vw;
   min-height: 20vw;
 }
+
+.pokemon.hit {
+  animation: hitShake 0.17s linear 1;
+}
+
+.result-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border: 3px solid #ffc55b;
+  border-radius: 16px;
+  padding: 24px;
+  z-index: 20;
+  width: min(90vw, 360px);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);
+}
+
+.result-modal h2 {
+  margin: 0 0 16px;
+  font-size: 24px;
+}
+
+.hidden {
+  display: none;
+}
+
+#logs {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+#logs p {
+  margin: 0 0 8px;
+  text-align: left;
+}
+
+#logs p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes hitShake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(4px);
+  }
+  50% {
+    transform: translateX(-4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .playground {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .control {
+    order: 3;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    margin-top: 0;
+    gap: 10px;
+  }
+
+  .button {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  .pokemon {
+    margin: 8px;
+  }
+
+  .logo {
+    width: min(92vw, 380px);
+    height: auto;
+  }
+
+  #logs {
+    width: calc(100% - 24px);
+    max-height: 180px;
+  }
+}

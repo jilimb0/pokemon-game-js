@@ -1,3 +1,5 @@
+import { clampHp, healthPercent } from "./game-logic.js"
+
 class Selectors {
   constructor(name) {
     this.elLvl = document.getElementById(`lvl-${name}`)
@@ -6,6 +8,7 @@ class Selectors {
     this.elBarHp = document.getElementById(`progressbar-${name}`)
     this.elHealth = document.getElementById(`health-${name}`)
     this.elButtons = document.querySelector(`.control`)
+    this.elCard = document.querySelector(`.${name}`)
   }
 }
 
@@ -31,15 +34,14 @@ export default class Pokemon extends Selectors {
   }
 
   changeHp = (count, cb) => {
-    const nextHp = Math.max(this.hp.newHp - count, 0)
-    const damageDone = this.hp.newHp - nextHp
+    const { nextHp, damageDone, isDefeated } = clampHp(this.hp.newHp, count)
 
     this.hp.newHp = nextHp
     this.renderHp()
 
     cb && cb(damageDone)
 
-    return this.hp.newHp === 0
+    return isDefeated
   }
 
   renderHp = () => {
@@ -52,7 +54,26 @@ export default class Pokemon extends Selectors {
   }
 
   renderBarHp = () => {
-    const hpPercent = Math.round((this.hp.newHp / this.hp.defaultHp) * 100)
+    const hpPercent = healthPercent(this.hp.newHp, this.hp.defaultHp)
+
     this.elBarHp.style.width = `${hpPercent}%`
+    this.elBarHp.classList.remove("low", "critical")
+
+    if (hpPercent <= 20) {
+      this.elBarHp.classList.add("critical")
+      return
+    }
+
+    if (hpPercent <= 45) {
+      this.elBarHp.classList.add("low")
+    }
+  }
+
+  hitEffect = () => {
+    this.elCard.classList.add("hit")
+
+    setTimeout(() => {
+      this.elCard.classList.remove("hit")
+    }, 170)
   }
 }
