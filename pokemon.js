@@ -39,7 +39,7 @@ export default class Pokemon extends Selectors {
     this.hp.newHp = nextHp
     this.renderHp()
 
-    cb && cb(damageDone)
+    cb?.(damageDone)
 
     return isDefeated
   }

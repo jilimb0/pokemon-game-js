@@ -1,11 +1,6 @@
-import test from "node:test"
 import assert from "node:assert/strict"
-import {
-  clampHp,
-  ensureDifferentPokemon,
-  healthPercent,
-  pickEnemyAttack,
-} from "../game-logic.js"
+import test from "node:test"
+import { clampHp, ensureDifferentPokemon, healthPercent, pickEnemyAttack } from "../game-logic.js"
 
 test("clampHp prevents negative hp and reports defeat", () => {
   const result = clampHp(20, 50)

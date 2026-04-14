@@ -1,11 +1,8 @@
-import random, { randomRange } from "./utils.js"
+import { ensureDifferentPokemon, pickEnemyAttack } from "./game-logic.js"
 import generateLog from "./logs.js"
 import Pokemon from "./pokemon.js"
-import {
-  ensureDifferentPokemon,
-  pickEnemyAttack,
-} from "./game-logic.js"
 import { POKEMONS } from "./pokemons.js"
+import random, { randomRange } from "./utils.js"
 
 const pokemon1 = POKEMONS[random(POKEMONS.length - 1)]
 let pokemon2 = POKEMONS[random(POKEMONS.length - 1)]
@@ -95,7 +92,7 @@ function countBtn(count = 6, btn) {
   const innerText = btn.innerText
   btn.innerText = `${innerText} (${count})`
 
-  return function () {
+  return () => {
     count = Math.max(count - 1, 0)
     if (count === 0) {
       btn.disabled = true

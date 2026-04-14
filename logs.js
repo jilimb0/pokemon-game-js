@@ -1,10 +1,6 @@
 import random from "./utils.js"
 
-function generateLog(
-  { name: nameChar, hp: { newHp, defaultHp } },
-  { name: nameEnemy },
-  count
-) {
+function generateLog({ name: nameChar, hp: { newHp, defaultHp } }, { name: nameEnemy }, count) {
   const logs = [
     `${nameChar} вспомнил что-то важное, но неожиданно ${nameEnemy}, не помня себя от испуга, ударил в предплечье врага. -${count} ${newHp}/${defaultHp}`,
     `${nameChar} поперхнулся, и за это ${nameEnemy} с испугу приложил прямой удар коленом в лоб врага. -${count} ${newHp}/${defaultHp}`,
