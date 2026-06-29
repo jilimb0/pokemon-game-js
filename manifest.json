@@ -2,7 +2,7 @@
   "name": "Pokemon Fight",
   "short_name": "Pokemon Fight",
   "description": "Browser-based turn-based Pokemon battle game",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ceefff",
   "theme_color": "#ffde00",

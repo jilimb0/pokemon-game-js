@@ -13,6 +13,5 @@ This is a static browser game. No user data is collected, stored, or transmitted
 ## Security features
 
 - Static site — no server, no database, no API
-- CSP headers set via `netlify.toml` (deployed) or manual server config
 - No external dependencies (vanilla JS)
 - All assets served from the same origin
