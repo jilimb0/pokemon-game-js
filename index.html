@@ -2,79 +2,80 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Pokemon Fight</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#ffde00" />
   </head>
   <body>
-    <div class="body">
+    <!-- Pokemon Selection Screen -->
+    <section id="selection">
       <header>
-        <img
-          class="logo"
-          title="Reset Game"
-          src="./assets/Pokemon_logo.png"
-          alt="Pokemon"
-        />
+        <img class="logo" src="./assets/Pokemon_logo.png" alt="Pokemon" />
+        <h1 class="selection-title">Choose your Pokemon!</h1>
       </header>
+      <div id="selection-grid"></div>
+      <button type="button" id="start-battle" class="button" disabled>Start Battle!</button>
+    </section>
 
-      <div class="playground">
-        <div class="pokemon player1">
-          <span class="lvl" id="lvl-player1"></span>
+    <!-- Game Screen -->
+    <section id="game" class="hidden">
+      <div class="body">
+        <header>
+          <img class="logo" title="Reset Game" src="./assets/Pokemon_logo.png" alt="Pokemon" />
+        </header>
 
-          <img class="sprite" id="img-player1" alt="Player 1 Pokemon" />
-
-          <div class="details">
-            <h2 class="name" id="name-player1"></h2>
-            <div class="hp">
-              <div class="bar">
-                <div
-                  class="health"
-                  id="progressbar-player1"
-                  style="width: 100%"
-                ></div>
+        <div class="playground">
+          <div class="pokemon player1">
+            <span class="lvl" id="lvl-player1"></span>
+            <img class="sprite" id="img-player1" alt="Player 1 Pokemon" />
+            <div class="details">
+              <h2 class="name" id="name-player1"></h2>
+              <div class="hp">
+                <div class="bar">
+                  <div class="health" id="progressbar-player1" style="width: 100%"></div>
+                </div>
+                <span class="text" id="health-player1"></span>
               </div>
-              <span class="text" id="health-player1"></span>
+            </div>
+          </div>
+
+          <div class="control" role="group" aria-label="Attack buttons"></div>
+
+          <div class="pokemon player2">
+            <span class="lvl" id="lvl-player2"></span>
+            <img class="sprite" id="img-player2" alt="Player 2 Pokemon" />
+            <div class="details">
+              <h2 class="name" id="name-player2"></h2>
+              <div class="hp">
+                <div class="bar">
+                  <div class="health" id="progressbar-player2" style="width: 100%"></div>
+                </div>
+                <span class="text" id="health-player2"></span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="control"></div>
-
-        <div class="pokemon player2">
-          <span class="lvl" id="lvl-player2"></span>
-
-          <img class="sprite" id="img-player2" alt="Player 2 Pokemon" />
-
-          <div class="details">
-            <h2 class="name" id="name-player2"></h2>
-            <div class="hp">
-              <div class="bar">
-                <div
-                  class="health"
-                  id="progressbar-player2"
-                  style="width: 100%"
-                ></div>
-              </div>
-              <span class="text" id="health-player2"></span>
-            </div>
-          </div>
-        </div>
+        <div id="logs" aria-live="polite" aria-label="Battle log"></div>
       </div>
-
-      <div id="logs"></div>
-    </div>
+    </section>
 
     <div class="catch_screen"></div>
 
-    <section class="result-modal hidden" id="result" aria-live="polite">
+    <section class="result-modal hidden" id="result" aria-live="assertive">
       <h2 id="result-text">Battle ended</h2>
       <button type="button" id="restart-game" class="button">Play again</button>
     </section>
 
+    <script src="selection.js" type="module"></script>
     <script src="main.js" type="module"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      }
+    </script>
   </body>
 </html>

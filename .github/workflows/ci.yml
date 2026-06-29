@@ -3,26 +3,42 @@ name: CI
 on:
   push:
     branches: ["main"]
-  pull_request:
+  pull_request: {}
 
 jobs:
   quality:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: pnpm/action-setup@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 26
           cache: pnpm
-
       - run: pnpm install --frozen-lockfile
-
       - name: Lint
         run: pnpm lint
-
-      - name: Test
+      - name: Unit tests
         run: pnpm test
+      - name: Install Playwright
+        run: pnpm exec playwright install chromium --with-deps
+      - name: E2E tests
+        run: pnpm exec playwright test --project=chromium
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3
+        with:
+          publish-dir: .
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from CI"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5

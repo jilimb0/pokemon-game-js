@@ -1,15 +1,7 @@
-import { ensureDifferentPokemon, pickEnemyAttack } from "./game-logic.js"
+import { pickEnemyAttack } from "./game-logic.js"
 import generateLog from "./logs.js"
 import Pokemon from "./pokemon.js"
-import { POKEMONS } from "./pokemons.js"
 import random, { randomRange } from "./utils.js"
-
-const pokemon1 = POKEMONS[random(POKEMONS.length - 1)]
-let pokemon2 = POKEMONS[random(POKEMONS.length - 1)]
-pokemon2 = ensureDifferentPokemon(pokemon1, pokemon2, POKEMONS)
-
-const player1 = new Pokemon({ ...pokemon1, selectors: "player1" })
-const player2 = new Pokemon({ ...pokemon2, selectors: "player2" })
 
 const $logs = document.getElementById("logs")
 const $control = document.querySelector(".control")
@@ -26,16 +18,17 @@ function addLog(attackedPlayer, attackingPlayer, damage) {
 }
 
 function disableControls() {
-  Array.from($control.querySelectorAll("button")).forEach((button) => {
+  for (const button of $control.querySelectorAll("button")) {
     button.disabled = true
-  })
+  }
 }
 
 function finishGame(winnerName) {
   isFinished = true
   disableControls()
-  $resultText.innerText = `${winnerName} wins the battle!`
+  $resultText.innerText = `${winnerName} wins!`
   $result.classList.remove("hidden")
+  $result.focus()
 }
 
 function performAttack(attacker, defender, attack) {
@@ -43,46 +36,44 @@ function performAttack(attacker, defender, attack) {
   const isDefeated = defender.changeHp(damage, (count) => {
     addLog(defender, attacker, count)
   })
-
   defender.hitEffect()
   return isDefeated
 }
 
-player1.attacks.forEach((attack) => {
-  const $btn = document.createElement("button")
-  $btn.className = "button"
-  $btn.id = `button-${attack.id}`
-  $btn.innerText = attack.name
+function startBattle(playerData, enemyData) {
+  const player1 = new Pokemon({ ...playerData, selectors: "player1" })
+  const player2 = new Pokemon({ ...enemyData, selectors: "player2" })
 
-  const btnCounter = countBtn(attack.maxCount, $btn)
+  player1.attacks.forEach((attack) => {
+    const $btn = document.createElement("button")
+    $btn.className = "button"
+    $btn.id = `button-${attack.id}`
+    $btn.innerText = attack.name
 
-  $btn.addEventListener("click", () => {
-    if (isFinished) {
-      return
-    }
+    const btnCounter = countBtn(attack.maxCount, $btn)
 
-    btnCounter()
+    $btn.addEventListener("click", () => {
+      if (isFinished) return
+      btnCounter()
+      const isEnemyDefeated = performAttack(player1, player2, attack)
+      if (isEnemyDefeated) {
+        finishGame(player1.name)
+        return
+      }
+      const enemyAttack = pickEnemyAttack(player2.attacks, random)
+      if (!enemyAttack) {
+        finishGame(player1.name)
+        return
+      }
+      const isPlayerDefeated = performAttack(player2, player1, enemyAttack)
+      if (isPlayerDefeated) {
+        finishGame(player2.name)
+      }
+    })
 
-    const isEnemyDefeated = performAttack(player1, player2, attack)
-    if (isEnemyDefeated) {
-      finishGame(player1.name)
-      return
-    }
-
-    const enemyAttack = pickEnemyAttack(player2.attacks, random)
-    if (!enemyAttack) {
-      finishGame(player1.name)
-      return
-    }
-
-    const isPlayerDefeated = performAttack(player2, player1, enemyAttack)
-    if (isPlayerDefeated) {
-      finishGame(player2.name)
-    }
+    player1.elButtons.appendChild($btn)
   })
-
-  player1.elButtons.appendChild($btn)
-})
+}
 
 $restart.addEventListener("click", () => {
   window.location.reload()
@@ -91,14 +82,17 @@ $restart.addEventListener("click", () => {
 function countBtn(count = 6, btn) {
   const innerText = btn.innerText
   btn.innerText = `${innerText} (${count})`
-
   return () => {
     count = Math.max(count - 1, 0)
     if (count === 0) {
       btn.disabled = true
     }
-
     btn.innerText = `${innerText} (${count})`
     return count
   }
 }
+
+// Listen for selection screen to finish
+window.addEventListener("battle-start", () => {
+  startBattle(window.__selectedPokemon, window.__enemyPokemon)
+})
