@@ -1,5 +1,5 @@
 import { pickEnemyAttack } from "./game-logic.js"
-import generateLog from "./logs.js"
+import generateLog, { getLang, setLang } from "./logs.js"
 import Pokemon from "./pokemon.js"
 import random, { randomRange } from "./utils.js"
 
@@ -77,6 +77,13 @@ function startBattle(playerData, enemyData) {
 
 $restart.addEventListener("click", () => {
   window.location.reload()
+})
+
+const $langToggle = document.getElementById("lang-toggle")
+$langToggle.addEventListener("click", () => {
+  const newLang = getLang() === "en" ? "ru" : "en"
+  setLang(newLang)
+  $langToggle.textContent = newLang.toUpperCase()
 })
 
 function countBtn(count = 6, btn) {

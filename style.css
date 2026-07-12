@@ -754,4 +754,36 @@ h1 {
     width: calc(100% - 24px);
     max-height: 180px;
   }
+
+  .lang-toggle {
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+}
+
+.lang-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border: 2px solid #ffde00;
+  border-radius: 6px;
+  background: #3b4cca;
+  color: #ffde00;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lang-toggle:hover {
+  background: #ffde00;
+  color: #3b4cca;
+}
+
+.lang-toggle:active {
+  transform: scale(0.95);
 }
